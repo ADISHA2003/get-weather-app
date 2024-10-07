@@ -1,0 +1,220 @@
+/* General reset for margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: #fff;
+    color: #000;
+    font-size: 100%;
+    padding: 0px;
+}
+
+/* Card styles */
+.card {
+    background-color: #212121;
+    color: #fff;
+    padding: 2em;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    display: flex; /* Use flexbox for the card */
+    flex-direction: column; /* Arrange elements vertically */
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        background-color: #212121;
+    }
+    .card {
+        box-shadow: none;
+        border-radius: 0px;
+    }
+}
+
+/* Search bar section */
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+form {
+    display: flex;
+}
+
+input.search-bar {
+    border: none;
+    outline: none;
+    padding: 10px;  /* Padding inside the input field */
+    border-radius: 20px;  /* Rounded corners */
+    background: white;  /* Background color */
+    color: black;  /* Text color */
+    font-size: 1em;  /* Font size */
+    margin-right: 10px;  /* Space between input and button */
+    flex-grow: 1; /* Allow input to take up available space */
+}
+
+button {
+    display: flex;  /* Center contents of the button */
+    align-items: center;  /* Center contents vertically */
+    justify-content: center;  /* Center contents horizontally */
+    padding: 10px;  /* Padding inside the button */
+    border-radius: 50%;  /* Make the button circular */
+    border: none;  /* Remove border */
+    width: 44px;  /* Fixed width */
+    height: 44px;  /* Fixed height */
+    background: rgb(255, 122, 122);  /* Background color */
+    color: black;  /* Text color */
+    cursor: pointer;  /* Pointer on hover */
+    transition: background 0.3s ease-in-out;  /* Smooth transition for hover effect */
+}
+
+button:hover {
+    background: #7fbdff;  /* Change background color on hover */
+}
+
+/* Weather data section */
+.weather {
+    text-align: center;
+    margin-bottom: 20px; /* Add space below weather data */
+}
+
+h1.temp {
+    font-size: 3.5rem;
+    margin: 10px 0;
+    line-height: 1;
+}
+
+.city {
+    font-size: 1.8rem;
+    margin-bottom: 0.4em;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.flex img {
+    width: 80px;
+    height: 80px;
+}
+
+.description {
+    text-transform: capitalize;
+    margin-left: 10px;
+    font-size: 1.2rem;
+}
+
+.details { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    grid-column-gap: 50px; /* Space between columns */
+    grid-row-gap: 50px; /* Space between rows */
+    margin-top: 20px; 
+}
+
+.feels-like, 
+.min-temp, 
+.max-temp, 
+.humidity, 
+.pressure, 
+.wind, 
+.wind-degree, 
+.clouds, 
+.visibility, 
+.sunrise, 
+.sunset, 
+.coordinates {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: #363636;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 500px) {
+    h1.temp {
+        font-size: 2.5rem;
+    }
+
+    .city {
+        font-size: 1.5rem;
+    }
+
+    .flex img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+
+    .feels-like, 
+    .min-temp, 
+    .max-temp, 
+    .humidity, 
+    .pressure, 
+    .wind, 
+    .wind-degree, 
+    .clouds, 
+    .visibility, 
+    .sunrise, 
+    .sunset, 
+    .coordinates {
+        font-size: 1rem;
+    }
+}
+
+/* Ensure card stays visible and aligned properly in all viewport sizes */
+@media screen and (max-width: 350px) {
+    .card {
+        padding: 1.5em;
+    }
+
+    input.search-bar {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    h1.temp {
+        font-size: 2rem;
+    }
+
+    button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .flex img {
+        width: 50px;
+        height: 50px;
+    }
+}
