@@ -1,6 +1,9 @@
+// index.js
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import express from 'express';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 // Load environment variables
 dotenv.config();
@@ -9,6 +12,11 @@ const app = express();
 
 // Middleware to serve static files
 app.use(express.static('public'));
+
+// Set the views directory and view engine
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Route to render the home page
