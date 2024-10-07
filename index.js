@@ -13,7 +13,9 @@ const app = express();
 // Middleware to serve static files
 app.use(express.static('public', {
     setHeaders: (res, path, stat) => {
-        res.set('Content-Type', 'text/css');
+        if (path.endsWith('.css')) {
+            res.set('Content-Type', 'text/css');
+        }
     }
 }));
 
