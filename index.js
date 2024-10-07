@@ -11,7 +11,11 @@ dotenv.config();
 const app = express();
 
 // Middleware to serve static files
-app.use(express.static('public'));
+app.use(express.static('public', {
+    setHeaders: (res, path, stat) => {
+        res.set('Content-Type', 'text/css');
+    }
+}));
 
 // Set the views directory and view engine
 const __filename = fileURLToPath(import.meta.url);
