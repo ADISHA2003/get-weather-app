@@ -55,7 +55,7 @@ app.get('/weather', async (req, res) => {
                 sunrise: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
                 sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
                 lat: data.coord.lat,
-                lon: data.coord.lon
+                lon: data.coord.lon,
             };            
             res.render('index', { weather: weather, error: null });
         }
