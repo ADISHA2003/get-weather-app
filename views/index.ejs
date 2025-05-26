@@ -6,60 +6,48 @@
     <title>Weather App</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 1rem;
+            color: #f8fafc;
         }
-
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding-top: 2rem;
         }
-
         .search-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.12);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.2);
             padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 0.6s;
         }
-
-        .search-form {
-            display: flex;
-            gap: 0.75rem;
-        }
-
+        .search-form { display: flex; gap: 0.75rem; }
         .search-input {
             flex: 1;
             padding: 1rem 1.25rem;
             border: none;
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
             font-size: 1rem;
             outline: none;
             transition: all 0.3s ease;
         }
-
-        .search-input::placeholder { color: rgba(255, 255, 255, 0.7); }
-        .search-input:focus { background: rgba(255, 255, 255, 0.3); }
-
+        .search-input::placeholder { color: rgba(255,255,255,0.7); }
+        .search-input:focus { background: rgba(255,255,255,0.35); box-shadow: 0 0 0 2px #667eea55; }
         .search-btn {
             padding: 1rem;
             border: none;
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.2);
+            background: #667eea;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -69,12 +57,12 @@
             align-items: center;
             justify-content: center;
         }
-
-        .search-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .search-btn:hover, .search-btn:focus {
+            background: #5a67d8;
+            outline: none;
             transform: scale(1.05);
         }
-
+        .search-btn svg { stroke: #fff; }
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -85,138 +73,51 @@
                 "main main feels humidity"
                 "wind pressure clouds visibility"
                 "sunrise sunset minmax minmax";
+            animation: fadeIn 0.8s;
         }
-
         .bento-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.13);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.22);
             padding: 1.5rem;
-            color: white;
+            color: #f8fafc;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.11);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            animation: fadeIn 1.2s;
         }
-
-        .bento-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .main-weather { grid-area: main; }
-        .temp-card { grid-area: temp; }
-        .feels-card { grid-area: feels; }
-        .humidity-card { grid-area: humidity; }
-        .wind-card { grid-area: wind; }
-        .pressure-card { grid-area: pressure; }
-        .clouds-card { grid-area: clouds; }
-        .visibility-card { grid-area: visibility; }
-        .sunrise-card { grid-area: sunrise; }
-        .sunset-card { grid-area: sunset; }
-        .minmax-card { grid-area: minmax; }
-
-        .main-weather {
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .city-name {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-        }
-
-        .weather-icon-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .weather-icon {
-            width: 100px;
-            height: 100px;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-        }
-
-        .weather-description {
-            font-size: 1.3rem;
-            font-weight: 400;
-            text-transform: capitalize;
-        }
-
-        .temp-card {
-            text-align: center;
-            justify-content: center;
-        }
-
-        .main-temp {
-            font-size: 3.5rem;
-            font-weight: 200;
-            line-height: 1;
-        }
-
-        .temp-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 0.5rem;
-        }
-
-        .card-label {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .card-value {
-            font-size: 1.4rem;
-            font-weight: 500;
-        }
-
-        .card-value.large {
-            font-size: 2rem;
-        }
-
-        .minmax-card {
-            flex-direction: row;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .minmax-item {
-            flex: 1;
-            text-align: center;
-        }
-
-        .minmax-temp {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .minmax-label {
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-
+        .bento-card:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 16px 32px rgba(0,0,0,0.13);}
+        .main-weather { grid-area: main; text-align: center; justify-content: center; align-items: center; }
+        .city-name { font-size: 2rem; font-weight: 600; margin-bottom: 1rem; opacity: 0.93; letter-spacing: 1px;}
+        .weather-icon-row { display: flex; align-items: center; justify-content: center; gap: 1.2rem; margin: 1rem 0;}
+        .weather-icon { width: 100px; height: 100px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
+        .weather-description { font-size: 1.3rem; font-weight: 400; text-transform: capitalize; }
+        .temp-card { text-align: center; justify-content: center; }
+        .main-temp { font-size: 3.8rem; font-weight: 200; line-height: 1; }
+        .temp-label { font-size: 0.95rem; opacity: 0.85; margin-top: 0.5rem; }
+        .card-label { font-size: 0.87rem; opacity: 0.83; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.6px;}
+        .card-value { font-size: 1.45rem; font-weight: 500;}
+        .card-value.large { font-size: 2.05rem;}
+        .minmax-card { flex-direction: row; align-items: center; gap: 2.2rem; }
+        .minmax-item { flex: 1; text-align: center; }
+        .minmax-temp { font-size: 1.8rem; font-weight: 500; margin-bottom: 0.25rem; }
+        .minmax-label { font-size: 0.85rem; opacity: 0.82;}
         .error {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.3);
+            background: rgba(255, 107, 107, 0.13);
+            border: 1px solid rgba(255,107,107,0.38);
             border-radius: 20px;
             padding: 2rem;
             color: #ff6b6b;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.18rem;
+            font-weight: 500;
+            margin-top: 2rem;
             backdrop-filter: blur(20px);
+            animation: fadeIn 0.7s;
         }
-
         @media (max-width: 768px) {
             .bento-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -229,14 +130,13 @@
                     "visibility minmax"
                     "sunrise sunset";
             }
-            
-            .weather-icon { width: 80px; height: 80px; }
-            .main-temp { font-size: 2.8rem; }
-            .city-name { font-size: 1.4rem; }
+            .bento-card { margin-bottom: 8px; }
+            .weather-icon { width: 80px; height: 80px;}
+            .main-temp { font-size: 2.6rem;}
+            .city-name { font-size: 1.3rem;}
         }
-
         @media (max-width: 480px) {
-            .container { padding-top: 1rem; }
+            .container { padding-top: 1rem;}
             .bento-grid {
                 grid-template-columns: 1fr;
                 grid-template-areas:
@@ -252,18 +152,22 @@
                     "sunrise"
                     "sunset";
             }
-            
-            .minmax-card { flex-direction: row; }
+            .minmax-card { flex-direction: row;}
+            .bento-card { margin-bottom: 10px; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px);}
+            to { opacity: 1; transform: none;}
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="search-card">
-            <form class="search-form" action="/weather" method="get">
-                <input type="text" name="city" class="search-input" placeholder="Enter city name..." required>
-                <button type="submit" class="search-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <form class="search-form" action="/weather" method="get" autocomplete="off">
+                <input type="text" name="city" class="search-input" placeholder="Enter city name..." required aria-label="Enter city name">
+                <button type="submit" class="search-btn" aria-label="Search for weather">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
@@ -273,60 +177,43 @@
 
         <% if (weather) { %>
         <div class="bento-grid">
-            <!-- Main Weather Card -->
             <div class="bento-card main-weather">
                 <div class="city-name"><%= weather.city %>, <%= weather.country %></div>
                 <div class="weather-icon-row">
                     <img src="https://openweathermap.org/img/wn/<%= weather.icon %>@2x.png" 
-                         alt="<%= weather.description %>" class="weather-icon">
+                         alt="<%= weather.description %>" class="weather-icon" loading="lazy">
                     <div class="weather-description"><%= weather.description %></div>
                 </div>
             </div>
-
-            <!-- Temperature Card -->
             <div class="bento-card temp-card">
                 <div class="card-label">Temperature</div>
                 <div class="main-temp"><%= weather.temp %>°</div>
                 <div class="temp-label">Celsius</div>
             </div>
-
-            <!-- Feels Like Card -->
             <div class="bento-card feels-card">
                 <div class="card-label">Feels Like</div>
                 <div class="card-value large"><%= weather.feels_like %>°</div>
             </div>
-
-            <!-- Humidity Card -->
             <div class="bento-card humidity-card">
                 <div class="card-label">Humidity</div>
                 <div class="card-value large"><%= weather.humidity %>%</div>
             </div>
-
-            <!-- Wind Card -->
             <div class="bento-card wind-card">
                 <div class="card-label">Wind Speed</div>
                 <div class="card-value"><%= weather.windSpeed %> km/h</div>
             </div>
-
-            <!-- Pressure Card -->
             <div class="bento-card pressure-card">
                 <div class="card-label">Pressure</div>
                 <div class="card-value"><%= weather.pressure %> hPa</div>
             </div>
-
-            <!-- Clouds Card -->
             <div class="bento-card clouds-card">
                 <div class="card-label">Cloudiness</div>
                 <div class="card-value"><%= weather.clouds %>%</div>
             </div>
-
-            <!-- Visibility Card -->
             <div class="bento-card visibility-card">
                 <div class="card-label">Visibility</div>
                 <div class="card-value"><%= (weather.visibility / 1000).toFixed(1) %> km</div>
             </div>
-
-            <!-- Min/Max Temperature Card -->
             <div class="bento-card minmax-card">
                 <div class="minmax-item">
                     <div class="minmax-temp"><%= weather.min_temp %>°</div>
@@ -337,14 +224,10 @@
                     <div class="minmax-label">Max Temp</div>
                 </div>
             </div>
-
-            <!-- Sunrise Card -->
             <div class="bento-card sunrise-card">
                 <div class="card-label">Sunrise</div>
                 <div class="card-value"><%= weather.sunrise %></div>
             </div>
-
-            <!-- Sunset Card -->
             <div class="bento-card sunset-card">
                 <div class="card-label">Sunset</div>
                 <div class="card-value"><%= weather.sunset %></div>
