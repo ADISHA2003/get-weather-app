@@ -1,160 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Weather App</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .card {
-      background: #1e1e1e;
-      color: #fff;
-      border-radius: 16px;
-      padding: 2rem;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 1rem;
+        }
 
-    .search {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 2rem;
+        }
 
-    .search input {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
+        .search-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-    .search button {
-      width: 44px;
-      height: 44px;
-      border: none;
-      border-radius: 50%;
-      background: #ff7a7a;
-      color: #000;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+        .search-form {
+            display: flex;
+            gap: 0.75rem;
+        }
 
-    .search button:hover {
-      background: #7fbdff;
-    }
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
 
-    .weather {
-      text-align: center;
-    }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+        .search-input:focus { background: rgba(255, 255, 255, 0.3); }
 
-    .weather h1 {
-      font-size: 3rem;
-      margin: 0.2em 0;
-    }
+        .search-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .weather .city {
-      font-size: 1.5rem;
-      margin-bottom: 0.5em;
-    }
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
 
-    .flex {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, minmax(140px, auto));
+            gap: 1rem;
+            grid-template-areas:
+                "main main temp temp"
+                "main main feels humidity"
+                "wind pressure clouds visibility"
+                "sunrise sunset minmax minmax";
+        }
 
-    .flex img {
-      width: 64px;
-      height: 64px;
-    }
+        .bento-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
 
-    .description {
-      text-transform: capitalize;
-      font-size: 1.2rem;
-    }
+        .bento-card:hover {
+            transform: translateY(-4px);
+        }
 
-    .details {
-      display: grid;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-      font-size: 0.95rem;
-    }
+        .main-weather { grid-area: main; }
+        .temp-card { grid-area: temp; }
+        .feels-card { grid-area: feels; }
+        .humidity-card { grid-area: humidity; }
+        .wind-card { grid-area: wind; }
+        .pressure-card { grid-area: pressure; }
+        .clouds-card { grid-area: clouds; }
+        .visibility-card { grid-area: visibility; }
+        .sunrise-card { grid-area: sunrise; }
+        .sunset-card { grid-area: sunset; }
+        .minmax-card { grid-area: minmax; }
 
-    .details div {
-      background: #2a2a2a;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-    }
+        .main-weather {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .error {
-      color: red;
-      margin-top: 1rem;
-      text-align: center;
-    }
+        .city-name {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
 
-    @media (max-width: 500px) {
-      .card {
-        border-radius: 0;
-        padding: 1.5rem 1rem;
-      }
+        .weather-icon-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
 
-      .weather h1 {
-        font-size: 2.2rem;
-      }
-    }
-  </style>
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .weather-description {
+            font-size: 1.3rem;
+            font-weight: 400;
+            text-transform: capitalize;
+        }
+
+        .temp-card {
+            text-align: center;
+            justify-content: center;
+        }
+
+        .main-temp {
+            font-size: 3.5rem;
+            font-weight: 200;
+            line-height: 1;
+        }
+
+        .temp-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .card-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-value {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .card-value.large {
+            font-size: 2rem;
+        }
+
+        .minmax-card {
+            flex-direction: row;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .minmax-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .minmax-temp {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .minmax-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .error {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            color: #ff6b6b;
+            text-align: center;
+            font-size: 1.1rem;
+            backdrop-filter: blur(20px);
+        }
+
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(6, minmax(120px, auto));
+                grid-template-areas:
+                    "main main"
+                    "temp feels"
+                    "humidity wind"
+                    "pressure clouds"
+                    "visibility minmax"
+                    "sunrise sunset";
+            }
+            
+            .weather-icon { width: 80px; height: 80px; }
+            .main-temp { font-size: 2.8rem; }
+            .city-name { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding-top: 1rem; }
+            .bento-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "main"
+                    "temp"
+                    "minmax"
+                    "feels"
+                    "humidity"
+                    "wind"
+                    "pressure"
+                    "clouds"
+                    "visibility"
+                    "sunrise"
+                    "sunset";
+            }
+            
+            .minmax-card { flex-direction: row; }
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <div class="search">
-      <form action="/weather" method="get" style="display:flex; width: 100%;">
-        <input name="city" type="text" placeholder="City, State or Country" required />
-        <button type="submit">
-          🔍
-        </button>
-      </form>
+    <div class="container">
+        <div class="search-card">
+            <form class="search-form" action="/weather" method="get">
+                <input type="text" name="city" class="search-input" placeholder="Enter city name..." required>
+                <button type="submit" class="search-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <% if (weather) { %>
+        <div class="bento-grid">
+            <!-- Main Weather Card -->
+            <div class="bento-card main-weather">
+                <div class="city-name"><%= weather.city %>, <%= weather.country %></div>
+                <div class="weather-icon-row">
+                    <img src="https://openweathermap.org/img/wn/<%= weather.icon %>@2x.png" 
+                         alt="<%= weather.description %>" class="weather-icon">
+                    <div class="weather-description"><%= weather.description %></div>
+                </div>
+            </div>
+
+            <!-- Temperature Card -->
+            <div class="bento-card temp-card">
+                <div class="card-label">Temperature</div>
+                <div class="main-temp"><%= weather.temp %>°</div>
+                <div class="temp-label">Celsius</div>
+            </div>
+
+            <!-- Feels Like Card -->
+            <div class="bento-card feels-card">
+                <div class="card-label">Feels Like</div>
+                <div class="card-value large"><%= weather.feels_like %>°</div>
+            </div>
+
+            <!-- Humidity Card -->
+            <div class="bento-card humidity-card">
+                <div class="card-label">Humidity</div>
+                <div class="card-value large"><%= weather.humidity %>%</div>
+            </div>
+
+            <!-- Wind Card -->
+            <div class="bento-card wind-card">
+                <div class="card-label">Wind Speed</div>
+                <div class="card-value"><%= weather.windSpeed %> km/h</div>
+            </div>
+
+            <!-- Pressure Card -->
+            <div class="bento-card pressure-card">
+                <div class="card-label">Pressure</div>
+                <div class="card-value"><%= weather.pressure %> hPa</div>
+            </div>
+
+            <!-- Clouds Card -->
+            <div class="bento-card clouds-card">
+                <div class="card-label">Cloudiness</div>
+                <div class="card-value"><%= weather.clouds %>%</div>
+            </div>
+
+            <!-- Visibility Card -->
+            <div class="bento-card visibility-card">
+                <div class="card-label">Visibility</div>
+                <div class="card-value"><%= (weather.visibility / 1000).toFixed(1) %> km</div>
+            </div>
+
+            <!-- Min/Max Temperature Card -->
+            <div class="bento-card minmax-card">
+                <div class="minmax-item">
+                    <div class="minmax-temp"><%= weather.min_temp %>°</div>
+                    <div class="minmax-label">Min Temp</div>
+                </div>
+                <div class="minmax-item">
+                    <div class="minmax-temp"><%= weather.max_temp %>°</div>
+                    <div class="minmax-label">Max Temp</div>
+                </div>
+            </div>
+
+            <!-- Sunrise Card -->
+            <div class="bento-card sunrise-card">
+                <div class="card-label">Sunrise</div>
+                <div class="card-value"><%= weather.sunrise %></div>
+            </div>
+
+            <!-- Sunset Card -->
+            <div class="bento-card sunset-card">
+                <div class="card-label">Sunset</div>
+                <div class="card-value"><%= weather.sunset %></div>
+            </div>
+        </div>
+        <% } else if (error) { %>
+        <div class="error"><%= error %></div>
+        <% } %>
     </div>
-
-    <% if (weather) { %>
-    <div class="weather">
-      <div class="city">Weather in <%= weather.city %>, <%= weather.country %></div>
-      <h1><%= weather.temp %>°C</h1>
-
-      <div class="flex">
-        <img src="https://openweathermap.org/img/wn/<%= weather.icon %>@2x.png" alt="<%= weather.description %>"/>
-        <div class="description"><%= weather.description %></div>
-      </div>
-
-      <div class="details">
-        <div>Feels Like: <%= weather.feels_like %>°C</div>
-        <div>Min Temp: <%= weather.min_temp %>°C</div>
-        <div>Max Temp: <%= weather.max_temp %>°C</div>
-        <div>Humidity: <%= weather.humidity %>%</div>
-        <div>Pressure: <%= weather.pressure %> hPa</div>
-        <div>Wind: <%= weather.windSpeed %> km/h, <%= weather.windDeg %>°</div>
-        <div>Cloudiness: <%= weather.clouds %>%</div>
-        <div>Visibility: <%= weather.visibility / 1000 %> km</div>
-        <div>Sunrise: <%= weather.sunrise %></div>
-        <div>Sunset: <%= weather.sunset %></div>
-        <div>Coordinates: [Lat: <%= weather.lat %>, Lon: <%= weather.lon %>]</div>
-      </div>
-    </div>
-    <% } else if (error) { %>
-    <div class="error"><%= error %></div>
-    <% } %>
-  </div>
 </body>
 </html>
